@@ -27,15 +27,18 @@ Menu::MenuItem controllerItems[] = {                                         //D
   {"LED ON", "Turns led on.", ledOn, nullptr},                               //This is a function entry.
   {"LED OFF", "Turns led off.", ledOff, nullptr},                            //This is a function entry.
 };
-Menu controllerMenu(controllerItems, 2, &lcd);            //Menu object constructor: defines the object for controllerItems (2 is the number of elements in array).
+Menu ledSubmenu(controllerItems, 2, &lcd);                //Submenu object constructor: defines the object for controllerItems (2 is the number of elements in array).
 Menu::MenuItem mainItems[] = {                                               //Defines array for mainItems.
 ////////TITLE////////DESCRIPTION///FUNCTION/////SUBMENU
-  {"LED CONTROLLER", "on/off LED", nullptr, &controllerMenu},                //This is a submenu entry.
+  {"LED CONTROLLER", "on/off LED", nullptr, &ledSubmenu},                    //This is a submenu entry.
   {"LED BRIGHT", "Trim bright", ledBright, nullptr},                         //This is a function entry.
-  {"INFO", "Show info", info, nullptr},
+  {"INFO", "Show info", info, nullptr},                                      //This is a function entry.
 };
-Menu mainMenu(mainItems, 3, &lcd);                        //Menu object constructor: defines the object for mainItems (3 is the number of elements in array).
+Menu mainMenu(mainItems, 3, &lcd);                        //Main menu object constructor: defines the object for mainItems (3 is the number of elements in array).
 Menu* currentMenu = &mainMenu;                                               //Keeps track of which menu is currently displayed/active.
+//IMPORTANT:
+//1) remember that constructor must be written after his array;
+//2) submenu array and submenu constructor must be written before main menu array and constructor.
 ////////////////////////////////////////////////////////
 void setup() {
   lcd.begin(16, 2);                                                          //Initialize the LCD display with 16 columns and 2 rows.
