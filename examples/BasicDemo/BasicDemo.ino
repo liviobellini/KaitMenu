@@ -1,6 +1,6 @@
 //KaitMenu basic demo, Wire and hd44780 libraries required in sketch.
 //This example shows how to create a menu with 4 void functions and one submenu entry, enjoy. :-)
-#include <arduino.h>
+#include <Arduino.h>
 #include <Wire.h>                                                           //REQUIRED!
 #include <ezButton.h>
 #include <hd44780.h>                                                        //REQUIRED!
