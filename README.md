@@ -20,26 +20,26 @@ KaitMenu allows developers to build interactive menu systems for I2C LCD display
 ## 📦 Installation
 
 ### **🟢 Method 1 — Arduino IDE Include Library **
-Download the .zip from GitHub -> *Sketch -> Include Library -> Add .ZIP Library*
+Download the .zip from GitHub -> *Sketch -> Include Library -> Add .ZIP Library*.
 
 ### **⚪ Method 2 — Arduino IDE Include Library **
-Open Library Manager on left column of Arduino IDE -> search "KaitMenu" -> select and install
+Open Library Manager on left column of Arduino IDE -> search "KaitMenu" -> select and install.
 
 ### **🔵 Method 3 — Manual Installation **
-Copy the **KaitMenu** folder into: ~/Documents/Arduino/libraries
+Copy the **KaitMenu** folder into: ~/Documents/Arduino/libraries.
 
 ## 📕 User guide
 Open BasicDemo.ino in the examples folder to learn how to use the library. Enjoy!😎
 
 ## ⚙️ Requirements
 
-Arduino compatible board<br>
-I2C LCD based on HD44780 + PCF8574 or compatible<br>
-Wire and hd44780 library installed
+Arduino compatible board,<br>
+I2C LCD based on PCF8574 or compatible,<br>
+Wire and hd44780 library installed.
 
 ## 👤 Author
 
-Developed by Livio Bellini<br>
+Developed by Livio Bellini.<br>
 Inspiration: Kaitlin Trujillo - "Your soul is in my heart".❤️
 
 ## ⭐ Support the project
@@ -53,3 +53,4 @@ Leave a star ⭐ on GitHub if you find KaitMenu useful!
 ![Screenshot menu](docs/img/2.jpg)
 ![Screenshot menu](docs/img/inside0.1.jpg)
 ![Screenshot menu](docs/img/inside2.jpg)
+
