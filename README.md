@@ -34,12 +34,15 @@ Open BasicDemo.ino in the examples folder to learn how to use the library. Enjoy
 ## ⚙️ Requirements
 
 Arduino compatible board
+
 I2C LCD based on HD44780 + PCF8574 or compatible
+
 Wire and hd44780 library installed
 
 ## 👤 Author
 
 Developed by Livio Bellini
+
 Inspiration: Kaitlin Trujillo - "Your soul is in my heart".❤️
 
 ## ⭐ Support the project
@@ -53,4 +56,3 @@ Leave a star ⭐ on GitHub if you find KaitMenu useful!
 ![Screenshot menu](docs/img/2.jpg)
 ![Screenshot menu](docs/img/inside0.1.jpg)
 ![Screenshot menu](docs/img/inside2.jpg)
-
