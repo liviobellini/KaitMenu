@@ -1,0 +1,138 @@
+//KaitMenu basic demo, Wire and hd44780 libraries required in sketch.
+//This example shows how to create a menu with 4 void functions and one submenu entry, enjoy. :-)
+#include <arduino.h>
+#include <Wire.h>                                                           //REQUIRED!
+#include <ezButton.h>
+#include <hd44780.h>                                                        //REQUIRED!
+#include <hd44780ioClass/hd44780_I2Cexp.h>                                  //REQUIRED!
+#include <KaitMenu.h>                                                       //REQUIRED!
+#include <Rotary.h>
+//-------------------------------------------------PIN DEFINITION-----------------------------------------------
+#define ENTER 3               //Switch Enter. 
+#define DT 4                  //Data encoder.
+#define CLK 5                 //Clock encoder.
+#define EXIT 11               //Switch Exit.
+////////////////////FUNCTIONS DEFINITION//////////////////////
+void ledOn();
+void ledOff();
+void ledBright();
+void info();
+//////////////////////////////////////////////////////////////
+ezButton enterButton(ENTER, EXTERNAL_PULLUP);                                //Set object ENTER switch as input with external pullup resistor.
+ezButton exitButton(EXIT, EXTERNAL_PULLUP);                                  //Set object EXIT switch as input with external pullup resistor.
+hd44780_I2Cexp lcd;                                                          //Set object LCD with address auto-detect.
+Rotary myEncoder = Rotary(DT, CLK);                                          //Set object for rotary encoder.
+Menu::MenuItem controllerItems[] = {                                         //Defines array for controllerItems.
+///TITLE/////DESCRIPTION////FUNCTION//SUBMENU
+  {"LED ON", "Turns led on.", ledOn, nullptr},                               //This is a function entry.
+  {"LED OFF", "Turns led off.", ledOff, nullptr},                            //This is a function entry.
+};
+Menu controllerMenu(controllerItems, 2, &lcd);            //Menu object constructor: defines the object for controllerItems (2 is the number of elements in array).
+Menu::MenuItem mainItems[] = {                                               //Defines array for mainItems.
+////////TITLE////////DESCRIPTION///FUNCTION/////SUBMENU
+  {"LED CONTROLLER", "on/off LED", nullptr, &controllerMenu},                //This is a submenu entry.
+  {"LED BRIGHT", "Trim bright", ledBright, nullptr},                         //This is a function entry.
+  {"INFO", "Show info", info, nullptr},
+};
+Menu mainMenu(mainItems, 3, &lcd);                        //Menu object constructor: defines the object for mainItems (3 is the number of elements in array).
+Menu* currentMenu = &mainMenu;                                               //Keeps track of which menu is currently displayed/active.
+////////////////////////////////////////////////////////
+void setup() {
+  lcd.begin(16, 2);                                                          //Initialize the LCD display with 16 columns and 2 rows.
+  lcd.setBacklight(255);                                                     //Turn on lcd backlight.
+  currentMenu->paging(0);                                                    //Print first main menu page.
+}
+
+void loop() {
+  int cursor = 0;
+  int prevCursor = 0;
+  while(true){
+    cursor = menuSelector(currentMenu->getCurrentIndex(), myEncoder.process()); //Check if someone is touching encoder and keep updated encoder cursor with menu current index.
+    if(prevCursor != cursor) {
+      currentMenu->paging(cursor);
+      prevCursor = cursor;
+    }
+    enterButton.loop();
+    if (enterButton.isReleased()) {                                     //If Enter button is pressed, enter the option.
+      currentMenu = currentMenu->enter(cursor);
+    }
+    exitButton.loop();
+    if (exitButton.isReleased()) {
+      currentMenu = currentMenu->exit();
+    }
+  }
+}
+////////////////////MENU FUNCTIONS//////////////////////
+void ledOn(){
+  lcd.clear();
+  lcd.home();
+  lcd.print("Now led is on!");
+  lcd.setCursor(0, 1);
+  lcd.print("press EXIT");
+  while(true){
+    exitButton.loop();
+    if (exitButton.isReleased()) {                                     //If Enter button is pressed, enter the option.
+      currentMenu = currentMenu->exit();
+      return;
+    }
+  }
+}
+
+void ledOff(){
+  lcd.clear();
+  lcd.home();
+  lcd.print("Now led is off!");
+  lcd.setCursor(0, 1);
+  lcd.print("press EXIT");
+  while(true){
+    exitButton.loop();
+    if (exitButton.isReleased()) {                                     //If Enter button is pressed, enter the option.
+      currentMenu = currentMenu->exit();
+      return;
+    }
+  }
+}
+
+void ledBright(){
+  lcd.clear();
+  lcd.home();
+  lcd.print("Do something or ");
+  lcd.setCursor(0, 1);
+  lcd.print("press EXIT.");
+  while(true){
+    exitButton.loop();
+    if (exitButton.isReleased()) {                                     //If Enter button is pressed, enter the option.
+      currentMenu = currentMenu->exit();
+      return;
+    }
+  }
+}
+
+void info(){
+  lcd.clear();
+  lcd.home();
+  lcd.print("This is for");
+  lcd.setCursor(0, 1);
+  lcd.print("TruKait.");
+  delay(4000);
+  currentMenu = currentMenu->exit();
+  return;
+}
+/////////////////////ROTARY ENCODER FUNCTION//////////////////////
+int menuSelector(int x, unsigned char y) {
+  int z = currentMenu->getMenuSize()-1;               //First menu array element has always 0 index so -1 is necessary to define right edge rotary encoder index.
+  if (y == DIR_CW) {
+    x++;
+  } else if (y == DIR_CCW) {
+    x--;
+  } else if (y == DIR_NONE){
+    x = x;
+  }
+  if(x <= 0){
+    x = 0;
+  } else if(x >= z){
+    x = z;
+  }
+  return x;
+}
+//////////////////////////////////////////////////////////////////
