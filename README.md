@@ -1,6 +1,8 @@
 # KaitMenu
 
-KaitMenu allows developers to build interactive menu systems for I2C LCD displays. Wire and hd44780 libraries required in sketch.
+Lcd menu library with submenu navigation and function callbacks.<br>
+KaitMenu allows developers to build interactive menu systems for I2C LCD displays.<br>
+Wire and hd44780 libraries required in sketch.
 
 ---
 
@@ -53,4 +55,5 @@ Leave a star ⭐ on GitHub if you find KaitMenu useful!
 ![Screenshot menu](docs/img/2.jpg)
 ![Screenshot menu](docs/img/inside0.1.jpg)
 ![Screenshot menu](docs/img/inside2.jpg)
+
 
