@@ -30,13 +30,17 @@ Menu* Menu::enter(int index) {
 }
 
 Menu* Menu::exit() {
-  if(inFunction || parent == nullptr) {
+  if(inFunction) {
     paging(currentIndex);
     return this;
-  } else if(parent != nullptr) {
-    parent->paging(parent->parentIndex);
-    return parent;
-  }
+  } else {
+    if(parent != nullptr) {
+      parent->paging(parent->parentIndex);
+      return parent;
+    } else {
+      return this;
+    }
+  }  
 }
 
 void Menu::paging(int index) {
@@ -58,3 +62,4 @@ int Menu::getMenuSize() {
 int Menu::getCurrentIndex() {
   return currentIndex;
 }
+
