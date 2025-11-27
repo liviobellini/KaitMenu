@@ -62,4 +62,3 @@ int Menu::getMenuSize() {
 int Menu::getCurrentIndex() {
   return currentIndex;
 }
-
