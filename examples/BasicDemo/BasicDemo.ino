@@ -52,9 +52,9 @@ void loop() {
   int menuMaxI = currentMenu->getMenuSize()-1;           //First menu array element has always 0 index so -1 is necessary to define right menu max index.
   while(true){
     cursor = myEncoder.loop(currentMenu->getCurrentIndex()); //Check if someone is touching encoder and keep updated encoder cursor with menu current index.
-    if(cursor < 0){
+    if(cursor <= 0){
       cursor = 0;
-    } else if(cursor > menuMaxI){
+    } else if(cursor >= menuMaxI){
       cursor = menuMaxI;
     }
     if(prevCursor != cursor) {
