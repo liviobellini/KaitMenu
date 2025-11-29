@@ -43,7 +43,6 @@ Menu* currentMenu = &mainMenu;                                               //K
 void setup() {
   lcd.begin(16, 2);                                                          //Initialize the LCD display with 16 columns and 2 rows.
   lcd.setBacklight(255);                                                     //Turn on lcd backlight.
-  myEncoder.begin();                                                         //Setup pullup resistors.
   currentMenu->paging(0);                                                    //Print first main menu page.
 }
 
