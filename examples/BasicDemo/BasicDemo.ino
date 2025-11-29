@@ -17,7 +17,7 @@ void ledOn();
 void ledOff();
 void ledBright();
 void info();
-//////////////////////////////////////////////////////////////
+////////////////////OBJECTS DEFINITION//////////////////////
 ezButton enterButton(ENTER, EXTERNAL_PULLUP);                                //Set object ENTER switch as input with external pullup resistor.
 ezButton exitButton(EXIT, EXTERNAL_PULLUP);                                  //Set object EXIT switch as input with external pullup resistor.
 hd44780_I2Cexp lcd;                                                          //Set object LCD with address auto-detect.
@@ -39,19 +39,25 @@ Menu* currentMenu = &mainMenu;                                               //K
 //IMPORTANT:
 //1) remember that constructor must be written after his array;
 //2) submenu array and submenu constructor must be written before main menu array and constructor.
-////////////////////////////////////////////////////////
+/////////////////////ARDUINO FUNCTIONS/////////////////////
 void setup() {
   lcd.begin(16, 2);                                                          //Initialize the LCD display with 16 columns and 2 rows.
   lcd.setBacklight(255);                                                     //Turn on lcd backlight.
-  myEncoder.begin();                                                         //Setup pullup resistors
+  myEncoder.begin();                                                         //Setup pullup resistors.
   currentMenu->paging(0);                                                    //Print first main menu page.
 }
 
 void loop() {
   int cursor = 0;
   int prevCursor = 0;
+  int menuMaxI = currentMenu->getMenuSize()-1;           //First menu array element has always 0 index so -1 is necessary to define right menu max index.
   while(true){
     cursor = myEncoder.loop(currentMenu->getCurrentIndex()); //Check if someone is touching encoder and keep updated encoder cursor with menu current index.
+    if(cursor < 0){
+      cursor = 0;
+    } else if(cursor > menuMaxI){
+      cursor = menuMaxI;
+    }
     if(prevCursor != cursor) {
       currentMenu->paging(cursor);
       prevCursor = cursor;
@@ -122,21 +128,4 @@ void info(){
   currentMenu = currentMenu->exit();
   return;
 }
-/////////////////////ROTARY ENCODER FUNCTION//////////////////////
-int menuSelector(int x, unsigned char y) {
-  int z = currentMenu->getMenuSize()-1;               //First menu array element has always 0 index so -1 is necessary to define right edge rotary encoder index.
-  if (y == DIR_CW) {
-    x++;
-  } else if (y == DIR_CCW) {
-    x--;
-  } else if (y == DIR_NONE){
-    x = x;
-  }
-  if(x <= 0){
-    x = 0;
-  } else if(x >= z){
-    x = z;
-  }
-  return x;
-}
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
