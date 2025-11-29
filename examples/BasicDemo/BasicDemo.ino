@@ -1,12 +1,12 @@
 //KaitMenu basic demo, Wire and hd44780 libraries required in sketch.
 //This example shows how to create a menu with 4 void functions and one submenu entry, enjoy. :-)
 #include <Arduino.h>
+#include <AmiraEncoder.h>
 #include <Wire.h>                                                           //REQUIRED!
 #include <ezButton.h>
 #include <hd44780.h>                                                        //REQUIRED!
 #include <hd44780ioClass/hd44780_I2Cexp.h>                                  //REQUIRED!
 #include <KaitMenu.h>                                                       //REQUIRED!
-#include <Rotary.h>
 //-------------------------------------------------PIN DEFINITION-----------------------------------------------
 #define ENTER 3               //Switch Enter. 
 #define DT 4                  //Data encoder.
@@ -21,7 +21,7 @@ void info();
 ezButton enterButton(ENTER, EXTERNAL_PULLUP);                                //Set object ENTER switch as input with external pullup resistor.
 ezButton exitButton(EXIT, EXTERNAL_PULLUP);                                  //Set object EXIT switch as input with external pullup resistor.
 hd44780_I2Cexp lcd;                                                          //Set object LCD with address auto-detect.
-Rotary myEncoder = Rotary(DT, CLK);                                          //Set object for rotary encoder.
+Encoder myEncoder(DT, CLK, EXTERNAL);                                        //Set object for rotary encoder with external pullup resistors and no sensitivity.
 Menu::MenuItem controllerItems[] = {                                         //Defines array for controllerItems.
 ///TITLE/////DESCRIPTION////FUNCTION//SUBMENU
   {"LED ON", "Turns led on.", ledOn, nullptr},                               //This is a function entry.
@@ -43,6 +43,7 @@ Menu* currentMenu = &mainMenu;                                               //K
 void setup() {
   lcd.begin(16, 2);                                                          //Initialize the LCD display with 16 columns and 2 rows.
   lcd.setBacklight(255);                                                     //Turn on lcd backlight.
+  myEncoder.begin();                                                         //Setup pullup resistors
   currentMenu->paging(0);                                                    //Print first main menu page.
 }
 
@@ -50,7 +51,7 @@ void loop() {
   int cursor = 0;
   int prevCursor = 0;
   while(true){
-    cursor = menuSelector(currentMenu->getCurrentIndex(), myEncoder.process()); //Check if someone is touching encoder and keep updated encoder cursor with menu current index.
+    cursor = myEncoder.loop(currentMenu->getCurrentIndex()); //Check if someone is touching encoder and keep updated encoder cursor with menu current index.
     if(prevCursor != cursor) {
       currentMenu->paging(cursor);
       prevCursor = cursor;
