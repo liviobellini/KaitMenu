@@ -16,7 +16,7 @@ class Menu {
     Menu(MenuItem* _items, int _size, hd44780_I2Cexp* _lcd, Menu* _parent = nullptr);
     Menu* enter(int index);
     Menu* exit();
-    void paging(int index);
+    void render(int index);
     int getMenuSize();
     int getCurrentIndex();
   private:
@@ -30,3 +30,4 @@ class Menu {
 };
 
 #endif
+
