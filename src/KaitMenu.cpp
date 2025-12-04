@@ -23,7 +23,7 @@ Menu* Menu::enter(int index) {
     Menu* sub = menuItems[index].submenu;
     sub->parent = this;
     sub->parentIndex = index;
-    sub->paging(0);
+    sub->render(0);
     return sub;
   }
   return this;
@@ -31,11 +31,11 @@ Menu* Menu::enter(int index) {
 
 Menu* Menu::exit() {
   if(inFunction) {
-    paging(currentIndex);
+    render(currentIndex);
     return this;
   } else {
     if(parent != nullptr) {
-      parent->paging(parent->parentIndex);
+      parent->render(parent->parentIndex);
       return parent;
     } else {
       return this;
@@ -43,7 +43,7 @@ Menu* Menu::exit() {
   }  
 }
 
-void Menu::paging(int index) {
+void Menu::render(int index) {
   if (index < 0 || index >= menuSize) {
     return;
   } 
