@@ -1,7 +1,8 @@
-Menu		KEYWORD Represents a menu object.
-MenuItem   	KEYWORD Defines a single menu item.
-enter		KEYWORD	Enter the selected menu item function or submenu.
-exit		KEYWORD	Exit current menu or submenu.
-paging		KEYWORD	Display the menu item on the LCD.
-getMenuSize	KEYWORD	Get the number of items in the menu.
+Menu		        KEYWORD Represents a menu object.
+MenuItem   	    KEYWORD Defines a single menu item.
+enter		        KEYWORD	Enter the selected menu item function or submenu.
+exit		        KEYWORD	Exit current menu or submenu.
+render		      KEYWORD	Display the menu item on the LCD.
+getMenuSize	    KEYWORD	Get the number of items in the menu.
+
 getCurrentIndex	KEYWORD	Get the current selected index.
