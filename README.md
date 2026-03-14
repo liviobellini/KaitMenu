@@ -24,7 +24,7 @@ Wire and hd44780 libraries required in sketch.
 ### **🟢 Method 1 — Arduino IDE Include Library **
 Download the .zip from GitHub -> *Sketch -> Include Library -> Add .ZIP Library*.
 
-### **⚪ Method 2 — Arduino IDE Include Library **
+### **⚪ Method 2 — Arduino IDE Library Manager **
 Open Library Manager on left column of Arduino IDE -> search "KaitMenu" -> select and install.
 
 ### **🔵 Method 3 — Manual Installation **
