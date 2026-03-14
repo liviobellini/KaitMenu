@@ -21,7 +21,7 @@ void info();
 ezButton enterButton(ENTER, EXTERNAL_PULLUP);                                //Set object ENTER switch as input with external pullup resistor.
 ezButton exitButton(EXIT, EXTERNAL_PULLUP);                                  //Set object EXIT switch as input with external pullup resistor.
 hd44780_I2Cexp lcd;                                                          //Set object LCD with address auto-detect.
-Encoder myEncoder(DT, CLK, EXTERNAL);                                        //Set object for rotary encoder with external pullup resistors and no sensitivity.
+Encoder myEncoder(DT, CLK, EXTERNAL, FULL_STEP, 0);            //Set object for rotary encoder with external pullup resistors, full step mode and no sensitivity.
 Menu::MenuItem controllerItems[] = {                                         //Defines array for controllerItems.
 ///TITLE/////DESCRIPTION////FUNCTION//SUBMENU
   {"LED ON", "Turns led on.", ledOn, nullptr},                               //This is a function entry.
